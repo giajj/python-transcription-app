@@ -11,23 +11,33 @@
 # limitations under the License.
 
 # [START gae_python37_app]
+import io
 from flask import Flask, request, jsonify, make_response
 
+from transcription import speech_to_text
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
 app = Flask(__name__)
-FALLBACK_RESPONSE = 'Please send me an audio file to transcribe'
 
 
 @app.route('/', methods=['POST'])
 def post_request():
     app.logger.info('Content-Type: %s', request.headers['Content-Type'])
+
     req = request.get_json(force=True)
+
+    if 'file' in request.files:
+        file = request.files['file']
+        with io.open(file, 'rb') as audio_file:
+            content = audio_file.read()
+            fulfillment_text = speech_to_text(content)
+    else:
+        fulfillment_text = 'Please send me a file'
 
     # Response to send to Dialogflow
     res = {
-        "fulfillmentText": FALLBACK_RESPONSE,
+        "fulfillmentText": fulfillment_text,
         'outputContexts': req['queryResult']['outputContexts']
     }
 

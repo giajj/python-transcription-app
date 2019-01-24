@@ -62,4 +62,16 @@ def test_index():
     data = json.loads(res.get_data().decode("utf-8"))
 
     assert res.status_code == 200
-    assert data['fulfillmentText'] == main.FALLBACK_RESPONSE
+    assert data['fulfillmentText'] == 'Please send me a file'
+
+#
+# def test_file_upload():
+#     main.app.testing = True
+#     client = main.app.test_client()
+#
+#     data = {
+#         'file': '/home/gmariotti/repos/python-transcription-app/tests/resources/AUDIO-2019-01-19-14-57-47.opus'
+#     }
+#
+#     res = client.post('/', data=data)
+#     assert res.status_code == 200
