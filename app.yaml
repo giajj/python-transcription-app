@@ -1,8 +1,1 @@
-runtime: python
-env: flex
-entrypoint: gunicorn -b :$PORT main:app
-
-runtime_config:
-  python_version: 3
-
-cloud_sql_instances: "pristine-atom-226517:europe-west2:bot-instance"
+runtime: python37
