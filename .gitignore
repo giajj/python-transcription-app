@@ -108,3 +108,6 @@ venv.bak/
 
 # Credentials
 key.json
+
+# Test
+cloud_sql_proxy
