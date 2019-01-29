@@ -72,7 +72,7 @@ sample_facebook_text_request = {
    "session": "projects/pristine-atom-226517/agent/sessions/6fa3c1fe-6573-48b4-8ad1-d9ce2e71fc27"
 }
 
-sample_facebook_media_request = {
+sample_facebook_flac_request = {
    "responseId": "e5439946-24f5-4995-85be-4f36b9d96b3a",
    "queryResult": {  
       "queryText": "FACEBOOK_MEDIA",
@@ -142,4 +142,76 @@ sample_facebook_media_request = {
       }
    },
    "session": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d"
+}
+
+sample_facebook_opus_request = {  
+   "responseId": "959c96e0-7ffd-46d0-9055-13204e0c9033",
+   "queryResult": {  
+      "queryText": "FACEBOOK_MEDIA",
+      "action": "input.unknown",
+      "parameters": {  
+
+      },
+      "allRequiredParamsPresent": True,
+      "fulfillmentMessages": [  
+         {  
+            "text": {  
+               "text": [  
+                  ""
+               ]
+            }
+         }
+      ],
+      "outputContexts": [  
+         {  
+            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/facebook_media"
+         },
+         {  
+            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/defaultfallbackintent-followup",
+            "lifespanCount": 2
+         },
+         {  
+            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/generic",
+            "lifespanCount": 4,
+            "parameters": {  
+               "facebook_sender_id": "2109732695780744"
+            }
+         }
+      ],
+      "intent": {  
+         "name": "projects/pristine-atom-226517/agent/intents/d4032e6d-d2a7-4659-931e-f12ef17ca2da",
+         "displayName": "Default Fallback Intent",
+         "isFallback": True
+      },
+      "intentDetectionConfidence": 1.0,
+      "languageCode": "en"
+   },
+   "originalDetectIntentRequest": {  
+      "source": "facebook",
+      "payload": {  
+         "data": {  
+            "sender": {  
+               "id": "2109732695780744"
+            },
+            "recipient": {  
+               "id": "590108701452104"
+            },
+            "message": {  
+               "attachments": [  
+                  {  
+                     "payload": {  
+                        "url": "https://cdn.fbsbx.com/v/t59.2708-21/50203080_2581615095187609_8740172015438135296_n.opus/AUDIO-2019-01-29-16-59-57.opus?_nc_cat=100&_nc_ht=cdn.fbsbx.com&oh=527d943bfd5714911ded0b24f33e5c29&oe=5C529B4D"
+                     },
+                     "type": "file"
+                  }
+               ],
+               "mid": "tFzHTaMzHfBDy--s4WCdMKIP7U1RzGN2MLu2WlPcaUX63eAOzkR-p9GeFXwNGKhTVsyYfbuMdI04J9x4vZ6qvQ",
+               "seq": 24864.0
+            },
+            "timestamp": 1548781287990.0
+         },
+         "source": "facebook"
+      }
+   },
+   "session": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409"
 }
