@@ -34,7 +34,7 @@ CLOUDSQL_DATABASE = 'requests'
 # Set this value to the Cloud SQL connection name, e.g.
 #   "project:region:cloudsql-instance".
 # You must also update the value in app.yaml.
-CLOUDSQL_CONNECTION_NAME = 'pristine-atom-226517:europe-west2:bot-instance'
+CLOUDSQL_CONNECTION_NAME = 'pristine-atom-226517:europe-west2:requests-instance'
 
 # The CloudSQL proxy is used locally to connect to the cloudsql instance.
 # To start the proxy, use:

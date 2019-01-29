@@ -32,6 +32,13 @@ def from_sql(row):
     """Translates a SQLAlchemy model instance into a dictionary"""
     data = row.__dict__.copy()
     data['id'] = row.id
+    data['user'] = row.user 
+    data['timestamp'] = row.timestamp 
+    data['query_text'] = row.query_text 
+    data['original_file_url'] = row.original_file_url
+    data['bucket_file_url'] = row.bucket_file_url
+    data['file_type'] = row.file_type
+    data['json'] = row.json 
     data.pop('_sa_instance_state')
     return data
 
@@ -44,7 +51,10 @@ class Request(db.Model):
     user = db.Column(db.String(255))
     timestamp = db.Column(db.String(255))
     query_text = db.Column(db.String(4096))
-    file_url = db.Column(db.String(255))
+    original_file_url = db.Column(db.String(255))
+    bucket_file_url = db.Column(db.String(255))
+    file_type = db.Column(db.String(255))
+    json = db.Column(db.String(4096))
 
     def __repr__(self):
         return "<Request(id='%s', user=%s)" % (self.id, self.user)

@@ -11,14 +11,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
 import logging
 from flask import Flask, request, jsonify, make_response
-from ast import literal_eval
 import datetime
 
 from bot.transcription import speech_to_text
-from bot.storage import upload_file
+from bot.storage import upload_file, upload_from_url
 
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
@@ -48,29 +46,25 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
     @app.route('/', methods=['POST'])
     def post_request():
         app.logger.info('Content-Type: %s', request.headers['Content-Type'])
+        request_json = request.get_json(force=True)
+
+        saved_request = save_request(request_json)
+
         try:
-            if 'file' in request.files:
-                add_request()
-                file = request.files['file']
-
+            if saved_request['file_type'] == 'audio':
                 app.logger.info('Call transcription service')
-                with io.open(file, 'rb') as audio_file:
-                    content = audio_file.read()
-                    fulfillment_text = speech_to_text(content)
-                context = literal_eval(request.form.get('queryResult'))['outputContexts']
-
+                fulfillment_text = speech_to_text(saved_request['bucket_file_url'])
             else:
-                fulfillment_text = 'Please send me a file'
-                context = request.get_json(force=True)['queryResult']['outputContexts']
-
-            # Response to send to Dialogflow
-            res = {
-                "fulfillmentText": fulfillment_text,
-                'outputContexts': context
-            }
+                fulfillment_text = 'Please send me an audio file'
         except Exception as e:
             app.logger.info('ERROR: %s', e)
-            res = {"fulfillmentText": 'ERROR'}
+            fulfillment_text = 'There was an error in processing your transcription'
+
+        # Response to send to Dialogflow
+        res = {
+            "fulfillmentText": fulfillment_text,
+            'outputContexts': request_json['queryResult']['outputContexts']
+        }
         return make_response(jsonify(res))
 
     # Add an error handler. This is useful for debugging the live application,
@@ -91,18 +85,30 @@ def get_model():
     return model_cloudsql
 
 
-def add_request():
-    data = request.form.to_dict(flat=True)
-    file_url = upload_file(request.files.get('file'))
+def save_request(request_json):
+    message = request_json['originalDetectIntentRequest']['payload']['data']['message']
+
+    id = request_json['responseId']
+    user = request_json['queryResult']['outputContexts'][-1]['parameters']['facebook_sender_id']
+    timestamp = str(datetime.datetime.utcnow())
+    query_text = request_json['queryResult']['queryText']
+
+    original_file_url = bucket_file_url = file_type = ''
+
+    if 'attachments' in message:
+        original_file_url = message['attachments'][0]['payload']['url']
+        bucket_file_url = upload_from_url(original_file_url)
+        file_type = message['attachments'][0]['type']
 
     db_data = {
-        'id': data['responseId'],
-        'user': 'NA',
-        'timestamp': str(datetime.datetime.utcnow()),
-        'query_text': literal_eval(data['queryResult'])['queryText'],
-        'file_url': file_url
+        'id': id,
+        'user': user,
+        'timestamp': timestamp,
+        'query_text': query_text,
+        'original_file_url': original_file_url,
+        'bucket_file_url': bucket_file_url,
+        'file_type': file_type,
+        'json': str(request_json)
     }
 
-    bot_request = get_model().create(db_data)
-
-    return bot_request
+    return get_model().create(db_data)

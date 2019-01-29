@@ -15,6 +15,8 @@
 from __future__ import absolute_import
 
 import datetime
+import subprocess
+import re
 
 from flask import current_app
 from google.cloud import storage
@@ -48,7 +50,27 @@ def _safe_filename(filename):
     return "{0}-{1}.{2}".format(basename, date, extension)
 
 
-# [START upload_file]
+def upload_from_url(url):
+    """
+    Upload the user-uploaded file to Google Cloud Storage and retrieve its
+    publicly-accessible URL.
+    """
+    filename = _safe_filename(_get_filename_from_url(url))
+    public_url = 'gs://{bucket}/{filename}'.format(bucket=current_app.config['CLOUD_STORAGE_BUCKET'], filename=filename)
+
+    command = 'curl \'{url}\' | gsutil cp - {public_url}'.format(url=url, public_url=public_url)
+    subprocess.call(command, shell=True)
+
+    current_app.logger.info(
+        "Uploaded file %s as %s.", filename, public_url)
+
+    return public_url
+
+
+def _get_filename_from_url(url):
+    return re.search('/([\w.]+)\?', url).group(1)
+
+
 def upload_file(file):
     """
     Upload the user-uploaded file to Google Cloud Storage and retrieve its
@@ -67,7 +89,6 @@ def upload_file(file):
         "Uploaded file %s as %s.", file.filename, public_url)
 
     return public_url
-# [END upload_image_file]
 
 
 def _upload_file(file_stream, filename, content_type):
