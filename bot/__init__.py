@@ -48,6 +48,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         request_json = request.get_json(force=True)
 
         saved_request = save_request(request_json)
+        app.logger.info('Request saved in database')
 
         try:
             if saved_request['file_type'] == 'audio':
