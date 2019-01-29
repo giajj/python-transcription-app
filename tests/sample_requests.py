@@ -6,7 +6,7 @@ sample_facebook_text_request = {
       "parameters": {
 
       },
-      "allRequiredParamsPresent":True,
+      "allRequiredParamsPresent": True,
       "fulfillmentMessages": [
          {
             "text": {
@@ -23,7 +23,7 @@ sample_facebook_text_request = {
          },
          {
             "name": "projects/pristine-atom-226517/agent/sessions/6fa3c1fe-6573-48b4-8ad1-d9ce2e71fc27/contexts/generic",
-            "lifespanCount":4,
+            "lifespanCount": 4,
             "parameters": {
                "facebook_sender_id": "2109732695780744"
             }
@@ -131,4 +131,3 @@ sample_facebook_media_request = {
    },
    "session": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d"
 }
-

@@ -1,5 +1,3 @@
-# Copyright 2015 Google Inc.
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -110,6 +108,6 @@ def _upload_file(file_stream, filename, content_type):
         file_stream,
         content_type=content_type)
 
-    public_url = 'gs://{bucket}/{filename}'.format(bucket=current_app.config['CLOUD_STORAGE_BUCKET'], filename=filename)
-
+    public_url = 'gs://{bucket}/{filename}'.format(bucket=current_app.config['CLOUD_STORAGE_BUCKET'],
+                                                   filename=filename)
     return public_url
