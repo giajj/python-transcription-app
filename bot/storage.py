@@ -70,7 +70,7 @@ def upload_from_url(url):
 
 def _get_filename_from_url(url):
     try:
-        filename = re.search('/([\w.]+)\?', url).group(1)
+        filename = re.search('/([\w.-]+)\?', url).group(1)
     except Exception as e:
         current_app.logger.info('ERROR: %s', e)
         filename = 'no-name.unk'
