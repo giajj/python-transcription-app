@@ -1,7 +1,7 @@
 import io
 import os
 
-from transcription import speech_to_text
+from bot.transcription import speech_to_text
 
 
 def test_en_transcription():
