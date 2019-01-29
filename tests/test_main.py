@@ -11,67 +11,33 @@
 # limitations under the License.
 
 from flask import json
+import random
 
 import main
+from tests.sample_requests import sample_facebook_text_request, sample_facebook_media_request
 
 
-def test_index():
+def test_post_facebook_text():
     main.app.testing = True
     client = main.app.test_client()
 
-    req = {
-      "responseId": "ea3d77e8-ae27-41a4-9e1d-174bd461b68c",
-      "session": "projects/your-agents-project-id/agent/sessions/88d13aa8-2999-4f71-b233-39cbf3a824a0",
-      "queryResult": {
-        "queryText": "user's original query to your agent",
-        "parameters": {
-            "param": "param value"
-        },
-        "allRequiredParamsPresent": True,
-        "fulfillmentText": "Text defined in Dialogflow's console for the intent that was matched",
-        "fulfillmentMessages": [
-          {
-            "text": {
-              "text": [
-                "Text defined in Dialogflow's console for the intent that was matched"
-              ]
-            }
-          }
-        ],
-        "outputContexts": [
-          {
-            "name": "projects/your-agents-project-id/agent/sessions/88d13aa8-2999-4f71-b233-39cbf3a824a0/contexts/",
-            "lifespanCount": 5,
-            "parameters": {
-              "param": "param value"
-            }
-          }
-        ],
-        "intent": {
-          "name": "projects/your-agents-project-id/agent/intents/29bcd7f8-f717-4261-a8fd-2d3e451b8af8",
-          "displayName": "Matched Intent Name"
-        },
-        "intentDetectionConfidence": 1,
-        "diagnosticInfo": {},
-        "languageCode": "en"
-      },
-      "originalDetectIntentRequest": {}
-    }
+    sample_facebook_text_request['responseId'] += str(random.getrandbits(128))
 
-    res = client.post('/', content_type='application/json', data=json.dumps(req))
+    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_text_request))
     data = json.loads(res.get_data().decode("utf-8"))
 
     assert res.status_code == 200
-    assert data['fulfillmentText'] == 'Please send me a file'
+    assert data['fulfillmentText'] == 'Please send me an audio file'
 
-#
-# def test_file_upload():
-#     main.app.testing = True
-#     client = main.app.test_client()
-#
-#     data = {
-#         'file': '/home/gmariotti/repos/python-transcription-app/tests/resources/AUDIO-2019-01-19-14-57-47.opus'
-#     }
-#
-#     res = client.post('/', data=data)
-#     assert res.status_code == 200
+
+def test_post_facebook_media():
+    main.app.testing = True
+    client = main.app.test_client()
+
+    sample_facebook_media_request['responseId'] += str(random.getrandbits(128))
+
+    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_media_request))
+    data = json.loads(res.get_data().decode("utf-8"))
+
+    assert res.status_code == 200
+    assert data['fulfillmentText'] == 'how old is the Brooklyn Bridge'
