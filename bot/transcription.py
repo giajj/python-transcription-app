@@ -3,11 +3,11 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 
 
-def speech_to_text(content, encoding_type='flac', sample_rate=16000, language_code='en-US'):
+def speech_to_text(uri, encoding_type='flac', sample_rate=16000, language_code='en-US'):
     # Instantiates a client
     client = speech.SpeechClient()
 
-    audio = types.RecognitionAudio(content=content)
+    audio = types.RecognitionAudio(uri=uri)
 
     if encoding_type == 'flac':
         encoding = enums.RecognitionConfig.AudioEncoding.FLAC
