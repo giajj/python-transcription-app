@@ -15,12 +15,11 @@
 from __future__ import absolute_import
 
 import datetime
-import subprocess
 import re
+import requests
 
 from flask import current_app
 from google.cloud import storage
-import six
 from werkzeug import secure_filename
 from werkzeug.exceptions import BadRequest
 
@@ -56,10 +55,14 @@ def upload_from_url(url):
     publicly-accessible URL.
     """
     filename = _safe_filename(_get_filename_from_url(url))
-    public_url = 'gs://{bucket}/{filename}'.format(bucket=current_app.config['CLOUD_STORAGE_BUCKET'], filename=filename)
 
-    command = 'curl \'{url}\' | gsutil cp - {public_url}'.format(url=url, public_url=public_url)
-    subprocess.call(command, shell=True)
+    r = requests.get(url, allow_redirects=True)
+
+    public_url = _upload_file(
+        r.content,
+        filename,
+        'application/octet-stream'
+    )
 
     current_app.logger.info(
         "Uploaded file %s as %s.", filename, public_url)
@@ -96,7 +99,7 @@ def _upload_file(file_stream, filename, content_type):
     Uploads a file to a given Cloud Storage bucket and returns the public url
     to the new object.
     """
-    _check_extension(filename, current_app.config['ALLOWED_EXTENSIONS'])
+    # _check_extension(filename, current_app.config['ALLOWED_EXTENSIONS'])
     filename = _safe_filename(filename)
 
     client = _get_storage_client()
@@ -107,9 +110,6 @@ def _upload_file(file_stream, filename, content_type):
         file_stream,
         content_type=content_type)
 
-    url = blob.public_url
+    public_url = 'gs://{bucket}/{filename}'.format(bucket=current_app.config['CLOUD_STORAGE_BUCKET'], filename=filename)
 
-    if isinstance(url, six.binary_type):
-        url = url.decode('utf-8')
-
-    return url
+    return public_url
