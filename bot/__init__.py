@@ -51,7 +51,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         app.logger.info('Request saved in database')
 
         try:
-            if saved_request['file_type'] == 'audio':
+            if saved_request['file_type'] in ['audio', 'file']:
                 app.logger.info('Call transcription service')
                 fulfillment_text = speech_to_text(saved_request['bucket_file_url'])
             else:
@@ -60,7 +60,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
             app.logger.info('ERROR: %s', e)
             fulfillment_text = 'There was an error in processing your transcription'
 
-        # Response to send to Dialogflow
+        app.logger.info('Sending response to Dialogflow')
         res = {
             "fulfillmentText": fulfillment_text,
             'outputContexts': request_json['queryResult']['outputContexts']
