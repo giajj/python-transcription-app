@@ -11,13 +11,13 @@
 # limitations under the License.
 
 import logging
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, current_app
 import datetime
 
 from bot.transcription import speech_to_text
 from bot.storage import upload_file, upload_from_url
 
-DEFAULT_LANGUAGE_CODES = ['en-US', 'it-IT']
+DEFAULT_LANGUAGE_CODE = 'en-US'
 
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
@@ -52,15 +52,19 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         saved_request = save_request(request_json)
         app.logger.info('Request saved in database')
 
-        try:
-            if saved_request['file_type'] in ['audio', 'file']:
-                app.logger.info('Call transcription service')
-                fulfillment_text = speech_to_text(saved_request['bucket_file_url'], DEFAULT_LANGUAGE_CODES)
-            else:
-                fulfillment_text = 'Please send me an audio file'
-        except Exception as e:
-            app.logger.info('ERROR: %s', e)
-            fulfillment_text = 'There was an error in processing your transcription'
+        if is_transcription_language_followup(request_json['queryResult']['outputContexts']):
+            try:
+                if saved_request['file_type'] in ['audio', 'file']:
+                    app.logger.info('Call transcription service')
+                    language_code = get_speech_language(request_json['queryResult']['outputContexts'])
+                    fulfillment_text = speech_to_text(saved_request['bucket_file_url'], language_code)
+                else:
+                    fulfillment_text = 'Please send me an audio file'
+            except Exception as e:
+                app.logger.info('ERROR: %s', e)
+                fulfillment_text = 'There was an error in processing your transcription'
+        else:
+            fulfillment_text = 'Request not recognised. Please say "Hi" to begin again.'
 
         app.logger.info('Sending response to Dialogflow')
         res = {
@@ -114,3 +118,31 @@ def save_request(request_json):
     }
 
     return get_model().create(db_data)
+
+
+def is_transcription_language_followup(context):
+    for interaction in context:
+        if 'transcription-language-followup' in interaction['name']:
+            return True
+    return False
+
+
+def get_speech_language(context):
+    for interaction in context:
+        if 'transcription-language-followup' in interaction['name']:
+            return get_language_code(interaction['parameters']['language'])
+
+    current_app.logger.info(
+        'ERROR: Language information not found in context. Using default (%s)', DEFAULT_LANGUAGE_CODE)
+    return DEFAULT_LANGUAGE_CODE
+
+
+def get_language_code(language):
+    if language.lower() == 'italian':
+        return 'it-IT'
+    elif language.lower() == 'english':
+        return 'en-US'
+    else:
+        current_app.logger.info(
+            'ERROR: Language information not found in context. Using default (%s)', DEFAULT_LANGUAGE_CODE)
+        return DEFAULT_LANGUAGE_CODE
