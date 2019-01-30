@@ -72,11 +72,10 @@ sample_facebook_text_request = {
    "session": "projects/pristine-atom-226517/agent/sessions/6fa3c1fe-6573-48b4-8ad1-d9ce2e71fc27"
 }
 
-sample_facebook_flac_request_en = {
-   "responseId": "e5439946-24f5-4995-85be-4f36b9d96b3a",
+sample_facebook_flac_request_en = {  
+   "responseId": "91c6315c-81c5-425e-bcdf-9793ba1e89c9",
    "queryResult": {  
       "queryText": "FACEBOOK_MEDIA",
-      "action": "input.unknown",
       "parameters": {  
 
       },
@@ -92,16 +91,33 @@ sample_facebook_flac_request_en = {
       ],
       "outputContexts": [  
          {  
-            "name": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d/contexts/facebook_media"
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-language-followup",
+            "lifespanCount": 1,
+            "parameters": {  
+               "language.original": "English",
+               "language": "English"
+            }
          },
          {  
-            "name": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d/contexts/defaultfallbackintent-followup",
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/facebook_media"
+         },
+         {  
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-followup",
+            "parameters": {  
+               "language.original": "English",
+               "language": "English"
+            }
+         },
+         {  
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/defaultfallbackintent-followup",
             "lifespanCount": 2
          },
          {  
-            "name": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d/contexts/generic",
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/generic",
             "lifespanCount": 4,
             "parameters": {  
+               "language.original": "English",
+               "language": "English",
                "facebook_sender_id": "2109732695780744"
             }
          }
@@ -128,130 +144,162 @@ sample_facebook_flac_request_en = {
                "attachments": [  
                   {  
                      "payload": {  
-                        "url": "https://cdn.fbsbx.com/v/t59.3654-21/15308171_1226846694027684_8966586941638180864_n.flac/brooklyn.flac?_nc_cat=101&_nc_ht=cdn.fbsbx.com&oh=c199b6ff6a69fa6c4c8e39984ad0d55c&oe=5C51ABEA"
+                        "url": "https://cdn.fbsbx.com/v/t59.3654-21/15308171_1226846694027684_8966586941638180864_n.flac/brooklyn.flac?_nc_cat=101&_nc_ht=cdn.fbsbx.com&oh=1bd210bc79f2c7d79552c456f2e02de6&oe=5C53A62A"
                      },
                      "type": "audio"
                   }
                ],
-               "mid": "5SzQcLdjmKm8yUMzvRqhyaIP7U1RzGN2MLu2WlPcaUX06tqyMGXcdh3ENeLI34GNULqe6TLAZgMZ2EgDusY-Bw",
-               "seq": 24799.0
+               "mid": "-jkTxYFQhiky7QQiYWv-vKIP7U1RzGN2MLu2WlPcaUXluY2OrADduGShlIwSFA_4bPcYyOBE1kxkzmx9OC8urw",
+               "seq": 25094.0
             },
-            "timestamp": 1548754168990.0
+            "timestamp": 1548846699363.0
          },
          "source": "facebook"
       }
    },
-   "session": "projects/pristine-atom-226517/agent/sessions/7128851b-8967-49f6-8f04-8a86ca97137d"
+   "session": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5"
 }
 
 sample_facebook_opus_request_en = {
-   "responseId": "959c96e0-7ffd-46d0-9055-13204e0c9033",
-   "queryResult": {  
+   "responseId": "ed38a143-6ce7-4f7c-b84f-8973c3aa483a",
+   "queryResult": {
       "queryText": "FACEBOOK_MEDIA",
-      "action": "input.unknown",
-      "parameters": {  
+      "parameters": {
 
       },
       "allRequiredParamsPresent": True,
-      "fulfillmentMessages": [  
-         {  
-            "text": {  
-               "text": [  
+      "fulfillmentMessages": [
+         {
+            "text": {
+               "text": [
                   ""
                ]
             }
          }
       ],
-      "outputContexts": [  
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/facebook_media"
+      "outputContexts": [
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c 3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-language-followup",
+            "lifespanCount": 1,
+            "parameters": {
+               "language.original": "English",
+               "language": "English"
+            }
          },
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/defaultfallbackintent-followup",
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/facebook_media"
+         },
+         {
+            "name": "projects/pristine-atom- 226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-followup",
+            "parameters": {
+               "language.original": "English",
+               "language": "English"
+            }
+         },
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/defaultfallbackintent-followup",
             "lifespanCount": 2
          },
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409/contexts/generic",
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/generic",
             "lifespanCount": 4,
-            "parameters": {  
+            "parameters": {
+               "language.original": "English",
+               "language": "English",
                "facebook_sender_id": "2109732695780744"
             }
          }
       ],
-      "intent": {  
-         "name": "projects/pristine-atom-226517/agent/intents/d4032e6d-d2a7-4659-931e-f12ef17ca2da",
+      "intent": {
+         "name": "projects/pristine-atom-226517/agent/intents/d403 2e6d-d2a7-4659-931e-f12ef17ca2da",
          "displayName": "Default Fallback Intent",
          "isFallback": True
       },
       "intentDetectionConfidence": 1.0,
       "languageCode": "en"
    },
-   "originalDetectIntentRequest": {  
+   "originalDetectIntentRequest": {
       "source": "facebook",
-      "payload": {  
-         "data": {  
-            "sender": {  
+      "payload": {
+         "data": {
+            "sender": {
                "id": "2109732695780744"
             },
-            "recipient": {  
+            "recipient": {
                "id": "590108701452104"
             },
-            "message": {  
-               "attachments": [  
-                  {  
-                     "payload": {  
-                        "url": "https://cdn.fbsbx.com/v/t59.2708-21/50203080_2581615095187609_8740172015438135296_n.opus/AUDIO-2019-01-29-16-59-57.opus?_nc_cat=100&_nc_ht=cdn.fbsbx.com&oh=527d943bfd5714911ded0b24f33e5c29&oe=5C529B4D"
+            "message": {
+               "attachments": [
+                  {
+                     "payload": {
+                        "url": "https://cdn.fbsbx.com/v/t59.2708-21/50203080_2581615095187609_8740172015438135296_n.opus/AUDIO-2019-01-29-16-59-57.opus?_nc_cat=100&_nc_ht=cdn.fbsbx.com&oh=a021f82dc6c05e27355669e0b9313238&oe=5C53ECCD"
                      },
                      "type": "file"
                   }
                ],
-               "mid": "tFzHTaMzHfBDy--s4WCdMKIP7U1RzGN2MLu2WlPcaUX63eAOzkR-p9GeFXwNGKhTVsyYfbuMdI04J9x4vZ6qvQ",
-               "seq": 24864.0
+               "mid": "WWBKWDfXTIKl9uZv0wVnwqIP7U1RzGN2MLu2WlPcaUVBdhM j3ocJUoGMm89ttSCO4cVC5Hs_D6p6kNASbR3I6Q",
+               "seq": 25072.0
             },
-            "timestamp": 1548781287990.0
+            "timestamp": 1548846543812.0
          },
          "source": "facebook"
       }
    },
-   "session": "projects/pristine-atom-226517/agent/sessions/f35afb09-42c4-45c1-8b49-ff7d4c066409"
+   "session": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5"
 }
 
 
 sample_facebook_opus_request_it = {  
-   "responseId": "4317f8d5-5fbe-41b2-a80c-020e25066114",
-   "queryResult": {  
+   "responseId": "14ac088e-e689-4c62-af7f-07f1df0ec962",
+   "queryResult": {
       "queryText": "FACEBOOK_MEDIA",
-      "action": "input.unknown",
-      "parameters": {  
+      "parameters": {
 
       },
       "allRequiredParamsPresent": True,
-      "fulfillmentMessages": [  
-         {  
-            "text": {  
-               "text": [  
+      "fulfillmentMessages": [
+         {
+            "text": {
+               "text": [
                   ""
                ]
             }
          }
       ],
-      "outputContexts": [  
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/250c2e62-5c94-49f6-a2f6-fd3d04fb78b1/contexts/facebook_media"
+      "outputContexts": [
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-language-followup",
+            "lifespanCount": 1,
+            "parameters": {
+               "language.original": "Italian",
+               "language": "Italian"
+            }
          },
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/250c2e62-5c94-49f6-a2f6-fd3d04fb78b1/contexts/defaultfallbackintent-followup",
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/facebook_media"
+         },
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/transcription-followup",
+            "parameters": {
+               "language.original": "Italian",
+               "language": "Italian"
+            }
+         },
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/defaultfallbackintent-followup",
             "lifespanCount": 2
          },
-         {  
-            "name": "projects/pristine-atom-226517/agent/sessions/250c2e62-5c94-49f6-a2f6-fd3d04fb78b1/contexts/generic",
+         {
+            "name": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5/contexts/generic",
             "lifespanCount": 4,
-            "parameters": {  
+            "parameters": {
+               "language.original": "Italian",
+               "language": "Italian",
                "facebook_sender_id": "2109732695780744"
             }
          }
       ],
-      "intent": {  
+      "intent": {
          "name": "projects/pristine-atom-226517/agent/intents/d4032e6d-d2a7-4659-931e-f12ef17ca2da",
          "displayName": "Default Fallback Intent",
          "isFallback": True
@@ -259,32 +307,32 @@ sample_facebook_opus_request_it = {
       "intentDetectionConfidence": 1.0,
       "languageCode": "en"
    },
-   "originalDetectIntentRequest": {  
+   "originalDetectIntentRequest": {
       "source": "facebook",
-      "payload": {  
-         "data": {  
-            "sender": {  
+      "payload": {
+         "data": {
+            "sender": {
                "id": "2109732695780744"
             },
-            "recipient": {  
+            "recipient": {
                "id": "590108701452104"
             },
-            "message": {  
-               "attachments": [  
-                  {  
-                     "payload": {  
+            "message": {
+               "attachments": [
+                  {
+                     "payload": {
                         "url": "https://cdn.fbsbx.com/v/t59.2708-21/51190382_597970917343490_2531532000041369600_n.opus/AUDIO-2019-01-30-08-45-16.opus?_nc_cat=111&_nc_ht=cdn.fbsbx.com&oh=d2317597f77e9076e183adcdc3fd3cfd&oe=5C54116C"
                      },
                      "type": "file"
                   }
                ],
-               "mid": "xqvUYZ9i5ieyHE8KyaRtkaIP7U1RzGN2MLu2WlPcaUUL5zoyuR97GAGvfH5LC8U1J_aiG75XD38ZINAS62EESg",
-               "seq": 24889.0
+               "mid": "EoAJjojdyMAWR6YQayTl-6IP7U1RzGN2MLu2WlPcaUVus69D9Z17UXYOsKjnOcThlYut7rRL_LcXSX5ZjMwRBw",
+               "seq": 25051.0
             },
-            "timestamp": 1548837992892.0
+            "timestamp": 1548846301655.0
          },
          "source": "facebook"
       }
    },
-   "session": "projects/pristine-atom-226517/agent/sessions/250c2e62-5c94-49f6-a2f6-fd3d04fb78b1"
+   "session": "projects/pristine-atom-226517/agent/sessions/3d1922c3-f788-4747-b086-4c4263fdb1e5"
 }
