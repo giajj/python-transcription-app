@@ -17,6 +17,8 @@ import datetime
 from bot.transcription import speech_to_text
 from bot.storage import upload_file, upload_from_url
 
+DEFAULT_LANGUAGE_CODES = ['en-US', 'it-IT']
+
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
     app = Flask(__name__)
@@ -38,7 +40,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         model.init_app(app)
 
     # Add a default root route.
-    @app.route("/")
+    @app.route('/')
     def index():
         return 'This Bot only works with post requests'
 
@@ -53,7 +55,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         try:
             if saved_request['file_type'] in ['audio', 'file']:
                 app.logger.info('Call transcription service')
-                fulfillment_text = speech_to_text(saved_request['bucket_file_url'])
+                fulfillment_text = speech_to_text(saved_request['bucket_file_url'], DEFAULT_LANGUAGE_CODES)
             else:
                 fulfillment_text = 'Please send me an audio file'
         except Exception as e:
@@ -62,7 +64,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
 
         app.logger.info('Sending response to Dialogflow')
         res = {
-            "fulfillmentText": fulfillment_text,
+            'fulfillmentText': fulfillment_text,
             'outputContexts': request_json['queryResult']['outputContexts']
         }
         return make_response(jsonify(res))

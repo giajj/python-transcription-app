@@ -12,12 +12,14 @@
 
 import os
 
+from flask import current_app
+
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 
 
-def speech_to_text(uri, sample_rate=16000, language_code='en-US'):
+def speech_to_text(uri, language_code_list, sample_rate=16000):
     # Instantiates a client
     client = speech.SpeechClient()
 
@@ -29,19 +31,33 @@ def speech_to_text(uri, sample_rate=16000, language_code='en-US'):
     elif extension == '.opus':
         encoding = enums.RecognitionConfig.AudioEncoding.OGG_OPUS
     else:
-        encoding = enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED
+        return 'File extension not supported'
 
-    config = types.RecognitionConfig(
-        encoding=encoding,
-        sample_rate_hertz=sample_rate,
-        language_code=language_code
-    )
+    confidences = []
+    transcripts = []
+    for language_code in language_code_list:
+        config = types.RecognitionConfig(
+            encoding=encoding,
+            sample_rate_hertz=sample_rate,
+            language_code=language_code
+        )
 
-    try:
         # Detects speech in the audio file
         response = client.recognize(config, audio)
-        transcript = response.results[0].alternatives[0].transcript
-    except Exception as e:
-        transcript = 'Error: %s' % e
+        try:
+            confidences.append(response.results[0].alternatives[0].confidence)
+            transcripts.append(response.results[0].alternatives[0].transcript)
+        except Exception as e:
+            current_app.logger.info('Error: %s', e)
 
-    return transcript
+    if len(confidences) > 0:
+        idx_max_conf = argmax(confidences)
+        current_app.logger.info('Detected language: %s, Confidence: %.2f',
+                                language_code_list[idx_max_conf], confidences[idx_max_conf])
+        return transcripts[idx_max_conf]
+    else:
+        return 'An error occurred during the transcription'
+
+
+def argmax(iterable):
+    return max((x, i) for i, x in enumerate(iterable))[1]
