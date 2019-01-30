@@ -31,7 +31,7 @@ def _check_extension(filename, allowed_extensions):
     if ('.' not in filename or
             filename.split('.').pop().lower() not in allowed_extensions):
         raise BadRequest(
-            "{0} has an invalid name or extension".format(filename))
+            '{0} has an invalid name or extension'.format(filename))
 
 
 def _safe_filename(filename):
@@ -42,9 +42,9 @@ def _safe_filename(filename):
     ``filename.ext`` is transformed into ``filename-YYYY-MM-DD-HHMMSS.ext``
     """
     filename = secure_filename(filename)
-    date = datetime.datetime.utcnow().strftime("%Y-%m-%d-%H%M%S")
+    date = datetime.datetime.utcnow().strftime('%Y-%m-%d-%H%M%S')
     basename, extension = filename.rsplit('.', 1)
-    return "{0}-{1}.{2}".format(basename, date, extension)
+    return '{0}-{1}.{2}'.format(basename, date, extension)
 
 
 def upload_from_url(url):
@@ -63,13 +63,18 @@ def upload_from_url(url):
     )
 
     current_app.logger.info(
-        "Uploaded file %s as %s.", filename, public_url)
+        'Uploaded file %s as %s.', filename, public_url)
 
     return public_url
 
 
 def _get_filename_from_url(url):
-    return re.search('/([\w.]+)\?', url).group(1)
+    try:
+        filename = re.search('/([\w.-]+)\?', url).group(1)
+    except Exception as e:
+        current_app.logger.info('ERROR: %s', e)
+        filename = 'no-name.unk'
+    return filename
 
 
 def upload_file(file):
@@ -87,7 +92,7 @@ def upload_file(file):
     )
 
     current_app.logger.info(
-        "Uploaded file %s as %s.", file.filename, public_url)
+        'Uploaded file %s as %s.', file.filename, public_url)
 
     return public_url
 

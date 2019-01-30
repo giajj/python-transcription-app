@@ -111,3 +111,6 @@ key.json
 
 # Test
 cloud_sql_proxy
+
+# Resource files
+audio_files/

@@ -14,7 +14,8 @@ from flask import json
 import random
 
 import main
-from tests.sample_requests import sample_facebook_text_request, sample_facebook_media_request
+from tests.sample_requests import sample_facebook_text_request, sample_facebook_flac_request_en, \
+    sample_facebook_opus_request_en, sample_facebook_opus_request_it
 
 
 def test_post_facebook_text():
@@ -27,17 +28,43 @@ def test_post_facebook_text():
     data = json.loads(res.get_data().decode("utf-8"))
 
     assert res.status_code == 200
-    assert data['fulfillmentText'] == 'Please send me an audio file'
+    assert data['fulfillmentText'] == 'Request not recognised. Please say "Hi" to begin again.'
 
 
-def test_post_facebook_media():
+def test_post_facebook_flac_en():
     main.app.testing = True
     client = main.app.test_client()
 
-    sample_facebook_media_request['responseId'] += str(random.getrandbits(128))
+    sample_facebook_flac_request_en['responseId'] += str(random.getrandbits(128))
 
-    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_media_request))
+    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_flac_request_en))
     data = json.loads(res.get_data().decode("utf-8"))
 
     assert res.status_code == 200
-    assert data['fulfillmentText'] == 'how old is the Brooklyn Bridge'
+    assert data['fulfillmentText'].lower() == 'how old is the brooklyn bridge'
+
+
+def test_post_facebook_opus_en():
+    main.app.testing = True
+    client = main.app.test_client()
+
+    sample_facebook_opus_request_en['responseId'] += str(random.getrandbits(128))
+
+    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_opus_request_en))
+    data = json.loads(res.get_data().decode("utf-8"))
+
+    assert res.status_code == 200
+    assert data['fulfillmentText'].lower() == 'how old is the brooklyn bridge'
+
+
+def test_post_facebook_opus_it():
+    main.app.testing = True
+    client = main.app.test_client()
+
+    sample_facebook_opus_request_it['responseId'] += str(random.getrandbits(128))
+
+    res = client.post('/', content_type='application/json', data=json.dumps(sample_facebook_opus_request_it))
+    data = json.loads(res.get_data().decode("utf-8"))
+
+    assert res.status_code == 200
+    assert data['fulfillmentText'].lower() == 'quanti anni ha il ponte della vittoria'
