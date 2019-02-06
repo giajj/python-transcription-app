@@ -1,0 +1,9 @@
+gcloud:
+    secret_key: 'add-your-secret_key-here'
+    project_id: 'add-your-project_id-here'
+    bucket: 'add-your-bucket-here'
+cloudsql:
+    user: 'add-your-user-here'
+    password: 'add-your-password-here'
+    database: 'add-your-database-here'
+    connection_name: 'add-your-connection_name-here'
